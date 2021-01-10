@@ -11,28 +11,25 @@ import ru.shchekalev.opencodewebtask.models.Role;
 import ru.shchekalev.opencodewebtask.models.User;
 import ru.shchekalev.opencodewebtask.repositories.UserRepository;
 
+import javax.persistence.JoinColumn;
 import javax.transaction.Transactional;
 import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService implements UserDetailsService {
-    private UserRepository userRepository;
+public class CustomUserDetailsService implements UserDetailsService {
+
+    private final UserRepository userRepository;
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
+    public CustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User '" + username + "' not found"));
 
         return new org.springframework.security.core.userdetails
@@ -44,6 +41,4 @@ public class UserService implements UserDetailsService {
                 .map(authority -> new SimpleGrantedAuthority(authority.getAuthority()))
                 .collect(Collectors.toSet());
     }
-
-
 }

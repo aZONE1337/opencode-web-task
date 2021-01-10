@@ -6,13 +6,16 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "answers")
+@Table(name = "answer")
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @Column(name = "text")
     private String text;
+
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private Question question;
 }

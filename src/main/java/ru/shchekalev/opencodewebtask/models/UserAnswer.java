@@ -1,21 +1,27 @@
 package ru.shchekalev.opencodewebtask.models;
 
 import lombok.Data;
-import ru.shchekalev.opencodewebtask.models.compositePKs.UserAnswerPK;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @Entity
 @Table(name = "user_answer")
-@IdClass(UserAnswerPK.class)
 public class UserAnswer {
 
-    @Id
-    @Column(name = "user_id")
-    private Long userId;
+    @EmbeddedId
+    UserAnswerPK userAnswerPK;
 
-    @Id
-    @Column(name = "answer_id")
-    private Long answerId;
+    @Data
+    @Embeddable
+    public static class UserAnswerPK implements Serializable {
+        @ManyToOne
+        @JoinColumn(name = "user_id")
+        private User user;
+
+        @ManyToOne
+        @JoinColumn(name = "answer_id")
+        private Answer answer;
+    }
 }

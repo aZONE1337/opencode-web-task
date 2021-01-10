@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create survey</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/constructor/surveys/create}" th:object="${survey}">
+    <p>
+        <input type="text" th:field="*{name}" id="name" required>
+    </p>
+    <button type="submit">Create</button>
+</form>
+</body>
+</html>

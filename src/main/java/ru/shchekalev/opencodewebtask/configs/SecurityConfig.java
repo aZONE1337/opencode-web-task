@@ -10,21 +10,24 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.shchekalev.opencodewebtask.models.Authority;
 import ru.shchekalev.opencodewebtask.models.Role;
-import ru.shchekalev.opencodewebtask.services.UserService;
+import ru.shchekalev.opencodewebtask.services.CustomUserDetailsService;
+import ru.shchekalev.opencodewebtask.services.UserServiceImpl;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private UserService userService;
+
+    private final CustomUserDetailsService userService;
 
     @Autowired
-    public void setUserDetailsService(UserService userService) {
+    public SecurityConfig(CustomUserDetailsService userService) {
         this.userService = userService;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/").hasAuthority(Authority.CREATE.getAuthority())
+                .antMatchers("/").hasAuthority(Authority.READ.getAuthority())
+                .antMatchers("/registration").permitAll()
                 .and()
                 .formLogin();
     }

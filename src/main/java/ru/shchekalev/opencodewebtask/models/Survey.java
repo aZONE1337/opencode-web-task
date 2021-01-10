@@ -3,14 +3,15 @@ package ru.shchekalev.opencodewebtask.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "surveys")
+@Table(name = "survey")
 public class Survey {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @Column(name = "name")
@@ -18,5 +19,12 @@ public class Survey {
 
     @Column(name = "status")
     @Enumerated(value = EnumType.STRING)
-    private Availability status;
+    private Availability status = Availability.UNAVAILABLE;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
+
+    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Question> questions;
 }
