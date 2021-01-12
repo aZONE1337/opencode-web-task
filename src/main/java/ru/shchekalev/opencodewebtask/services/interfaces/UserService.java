@@ -1,9 +1,6 @@
 package ru.shchekalev.opencodewebtask.services.interfaces;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import ru.shchekalev.opencodewebtask.models.User;
+import ru.shchekalev.opencodewebtask.model.entity.User;
 
 public interface UserService {
 

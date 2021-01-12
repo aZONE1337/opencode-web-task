@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Create survey</title>
+    <title>Title</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/constructor/create}" th:object="${survey}">
+<form th:method="POST" th:action="@{/question/create}" th:object="${question}">
     <p>
-        <input type="text" th:field="*{name}" id="name" required>
+        <input type="text" th:field="*{text}" id="text" required>
     </p>
     <button type="submit">Create</button>
 </form>

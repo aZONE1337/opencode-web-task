@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Surveys</title>
+</head>
+<body>
+
+<div th:each="survey :  ${surveys}">
+    <a th:text="${survey.getName()}" th:href="@{/surveys/{id}(id=${survey.getId()})}">survey</a>
+</div>
+
+</body>
+</html>

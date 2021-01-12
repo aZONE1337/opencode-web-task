@@ -1,9 +1,8 @@
 package ru.shchekalev.opencodewebtask;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.shchekalev.opencodewebtask.models.Role;
-import ru.shchekalev.opencodewebtask.models.User;
-import ru.shchekalev.opencodewebtask.repositories.UserRepository;
+import ru.shchekalev.opencodewebtask.model.assistant.Role;
+import ru.shchekalev.opencodewebtask.model.entity.User;
 
 public class Test {
     public static void main(String[] args) {

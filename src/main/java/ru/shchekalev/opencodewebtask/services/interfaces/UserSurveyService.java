@@ -1,10 +1,11 @@
 package ru.shchekalev.opencodewebtask.services.interfaces;
 
-import ru.shchekalev.opencodewebtask.models.Survey;
-import ru.shchekalev.opencodewebtask.models.User;
+import ru.shchekalev.opencodewebtask.model.entity.Survey;
+import ru.shchekalev.opencodewebtask.model.entity.User;
 
 import java.util.List;
-import java.util.Set;
 
 public interface UserSurveyService {
+
+    List<Survey> findAllNotStarted(User user);
 }
