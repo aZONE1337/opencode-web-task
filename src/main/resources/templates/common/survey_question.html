@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Question</title>
+</head>
+<body>
+<a th:text="'Вопрос №' + ${questionNum + 1}"></a>
+<a th:text="${question.getText()}"></a>
+<form th:method="post" th:action="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum})}" th:object="${user}">
+    <div th:each="answer : ${question.getAnswers()}">
+        <input th:type="${question.isSingleChoice()} ? 'radio' : 'checkbox'" th:field="*{answers}" th:value="${answer.getId()}" th:text="${answer.getText()}" required>
+    </div>
+    <button type="submit">Save answer</button>
+</form>
+<a th:if="${questionNum > 0}" th:href="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum} - 1)}">Previous question</a>
+<a th:if="${questionNum} < ${survey.getQuestions().size() - 1}" th:href="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum} + 1)}">Next question</a>
+<form th:if="${questionNum} == ${survey.getQuestions().size() - 1}" th:method="post" th:action="@{/surveys/{id}/complete(id=${survey.getId()})}">
+    <button type="submit">Save survey</button>
+</form>
+</body>
+</html>

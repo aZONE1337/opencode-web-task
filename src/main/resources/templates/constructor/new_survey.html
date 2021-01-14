@@ -6,8 +6,12 @@
 </head>
 <body>
     <form th:method="post" th:action="@{/constructor/surveys}" th:object="${survey}">
-        <input type="text" th:field="*{name}" id="name" placeholder="Название анкеты" required>
-        <button type="submit">Создать</button>
+        <input type="text" th:field="*{name}" id="name" placeholder="Survey name" required>
+        <select th:field="*{available}">
+            <option th:value="true">Available</option>
+            <option th:value="false">Unavailable</option>
+        </select>
+        <button type="submit">Create</button>
     </form>
 </body>
 </html>

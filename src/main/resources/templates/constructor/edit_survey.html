@@ -6,8 +6,8 @@
 </head>
 <body>
     <form th:method="patch" th:action="@{/constructor/surveys/{id}(id=${survey.getId()})}" th:object="${survey}">
-        <input type="text" th:field="*{name}" id="name" placeholder="Новое название" required>
-        <button type="submit">Сохранить</button>
+        <input type="text" th:field="*{name}" id="name" placeholder="New survey name" required>
+        <button type="submit">Save</button>
     </form>
 </body>
 </html>

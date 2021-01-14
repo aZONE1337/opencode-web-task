@@ -7,9 +7,9 @@
 <body>
 <div th:each="survey : ${surveys}">
     <a th:text="${survey.getName()}"></a>
-    <a th:href="@{/constructor/surveys/{id}/edit(id=${survey.getId()})}">Редактировать</a>
-    <a th:href="@{/constructor/questions(survey_id=${survey.getId()})}">Вопросы</a>
+    <a th:href="@{/constructor/surveys/{id}/edit(id=${survey.getId()})}">Edit survey</a>
+    <a th:href="@{/constructor/questions(survey_id=${survey.getId()})}">Questions</a>
 </div>
-<a href="/constructor/surveys/new">Создать анкету</a>
+<a href="/constructor/surveys/new">Create new survey</a>
 </body>
 </html>

@@ -4,13 +4,12 @@ import lombok.Data;
 import ru.shchekalev.opencodewebtask.model.assistant.Role;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Comparable<User> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +26,7 @@ public class User {
     private Role role = Role.USER;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Survey> createdSurveys = new HashSet<>();
+    private List<Survey> createdSurveys;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -35,7 +34,7 @@ public class User {
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "answer_id") }
     )
-    Set<Answer> answers = new HashSet<>();
+    List<Answer> answers;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -43,5 +42,10 @@ public class User {
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "survey_id") }
     )
-    Set<Survey> completedSurveys = new HashSet<>();
+    List<Survey> completedSurveys;
+
+    @Override
+    public int compareTo(User o) {
+        return Long.compare(this.getId(), o.getId());
+    }
 }

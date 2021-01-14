@@ -3,6 +3,8 @@ package ru.shchekalev.opencodewebtask.services.implementations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.shchekalev.opencodewebtask.model.entity.Answer;
+import ru.shchekalev.opencodewebtask.model.entity.Survey;
+import ru.shchekalev.opencodewebtask.model.entity.User;
 import ru.shchekalev.opencodewebtask.repository.AnswerRepository;
 import ru.shchekalev.opencodewebtask.services.interfaces.AnswerService;
 
@@ -45,5 +47,17 @@ public class AnswerServiceImpl implements AnswerService {
         answer.setText(newAnswer.getText());
 
         return answerRepository.save(answer);
+    }
+
+    @Override
+    public List<Answer> findAllByUsers(User user) {
+        return answerRepository.findAllByUsers(user);
+    }
+
+    @Override
+    public List<Survey> findAllStartedSurveys(List<Answer> userAnswers) {
+        //TODO
+
+        return null;
     }
 }

@@ -1,16 +1,14 @@
 package ru.shchekalev.opencodewebtask.model.entity;
 
 import lombok.Data;
-import ru.shchekalev.opencodewebtask.model.assistant.QuestionType;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "question")
-public class Question {
+public class Question implements Comparable<Question> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,17 +18,21 @@ public class Question {
     private String text;
 
     @Column(name = "type")
-    @Enumerated(value = EnumType.STRING)
-    private QuestionType type = QuestionType.SINGLE;
+    private boolean singleChoice = true;
 
     @ManyToOne
     @JoinColumn(name = "survey_id")
     private Survey survey;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Answer> answers = new HashSet<>();
+    private List<Answer> answers;
 
     public boolean isValid() {
         return answers.size() > 1;
+    }
+
+    @Override
+    public int compareTo(Question o) {
+        return Long.compare(this.getId(), o.getId());
     }
 }

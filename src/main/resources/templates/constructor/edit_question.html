@@ -6,15 +6,15 @@
 </head>
 <body>
     <form th:method="patch" th:action="@{/constructor/questions/{id}(id=${question.getId()})}" th:object="${question}">
-        <label for="text">Введите текст вопроса:</label>
-        <input type="text" th:field="*{text}" id="text" placeholder="Новый текст вопроса" required>
-        <label>Выберите тип вопроса:
-            <select th:field="*{type}">
-                <option th:value="SINGLE">Один вариант ответа</option>
-                <option th:value="MULTI">Несколько вариантов ответа</option>
+        <label for="text">Enter question here:</label>
+        <input type="text" th:field="*{text}" id="text" placeholder="New question text" required>
+        <label>Choose question type:
+            <select th:field="*{singleChoice}">
+                <option th:value="true">Single choice</option>
+                <option th:value="false">Multiple choice</option>
             </select>
         </label>
-        <button type="submit">Сохранить</button>
+        <button type="submit">Save</button>
     </form>
 </body>
 </html>

@@ -7,8 +7,8 @@
 <body>
 <div th:each="answer : ${answers}">
     <a th:text="${answer.getText()}"></a>
-    <a th:href="@{/constructor/answers/{id}/edit(id=${answer.getId()})}">Редактировать</a>
+    <a th:href="@{/constructor/answers/{id}/edit(id=${answer.getId()})}">Edit</a>
 </div>
-<a th:href="@{/constructor/answers/new(question_id=${question.getId()})}">Добавить ответ</a>
+<a th:href="@{/constructor/answers/new(question_id=${question.getId()})}">Add answer option</a>
 </body>
 </html>

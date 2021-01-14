@@ -6,8 +6,8 @@
 </head>
 <body>
     <form th:method="post" th:action="@{/constructor/answers(question_id=${question.getId()})}" th:object="${answer}">
-        <input type="text" th:field="*{text}" id="text" placeholder="Текст ответа" required>
-        <button type="submit">Создать</button>
+        <input type="text" th:field="*{text}" id="text" placeholder="Answer text" required>
+        <button type="submit">Create</button>
     </form>
 </body>
 </html>

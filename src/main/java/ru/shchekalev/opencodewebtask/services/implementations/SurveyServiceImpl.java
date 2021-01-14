@@ -2,8 +2,8 @@ package ru.shchekalev.opencodewebtask.services.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.shchekalev.opencodewebtask.model.assistant.Availability;
 import ru.shchekalev.opencodewebtask.model.entity.Survey;
+import ru.shchekalev.opencodewebtask.model.entity.User;
 import ru.shchekalev.opencodewebtask.repository.SurveyRepository;
 import ru.shchekalev.opencodewebtask.services.interfaces.SurveyService;
 
@@ -37,7 +37,7 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Override
     public List<Survey> findAllAvailable() {
-        return surveyRepository.findAllByStatus(Availability.AVAILABLE);
+        return surveyRepository.findAllByAvailableIsTrue();
     }
 
     @Override
@@ -46,5 +46,10 @@ public class SurveyServiceImpl implements SurveyService {
         survey.setName(newSurvey.getName());
 
         return surveyRepository.save(survey);
+    }
+
+    @Override
+    public List<Survey> findAllCompletedByUser(User user) {
+        return surveyRepository.findAllByUsers(user);
     }
 }

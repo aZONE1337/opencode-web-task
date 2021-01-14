@@ -3,13 +3,12 @@ package ru.shchekalev.opencodewebtask.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "answer")
-public class Answer {
+public class Answer implements Comparable<Answer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +22,10 @@ public class Answer {
     private Question question;
 
     @ManyToMany(mappedBy = "answers")
-    private Set<User> users = new HashSet<>();
+    private List<User> users;
+
+    @Override
+    public int compareTo(Answer o) {
+        return Long.compare(this.getId(), o.getId());
+    }
 }

@@ -7,9 +7,9 @@
 <body>
 <div th:each="question : ${questions}">
     <a th:text="${question.getText()}"></a>
-    <a th:href="@{/constructor/questions/{id}/edit(id=${question.getId()})}">Редактировать</a>
-    <a th:href="@{/constructor/answers(question_id=${question.getId()})}">Ответы</a>
+    <a th:href="@{/constructor/questions/{id}/edit(id=${question.getId()})}">Edit question</a>
+    <a th:href="@{/constructor/answers(question_id=${question.getId()})}">Answers</a>
 </div>
-<a th:href="@{/constructor/questions/new(survey_id=${survey.getId()})}">Добавить вопрос</a>
+<a th:href="@{/constructor/questions/new(survey_id=${survey.getId()})}">Add question</a>
 </body>
 </html>

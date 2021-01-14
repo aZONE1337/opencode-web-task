@@ -1,16 +1,14 @@
 package ru.shchekalev.opencodewebtask.model.entity;
 
 import lombok.Data;
-import ru.shchekalev.opencodewebtask.model.assistant.Availability;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "survey")
-public class Survey {
+public class Survey implements Comparable<Survey> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,20 +18,24 @@ public class Survey {
     private String name;
 
     @Column(name = "status")
-    @Enumerated(value = EnumType.STRING)
-    private Availability status = Availability.UNAVAILABLE;
+    private boolean available = false;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
 
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Question> questions = new HashSet<>();
+    private List<Question> questions;
 
     @ManyToMany(mappedBy = "completedSurveys")
-    private Set<User> users;
+    private List<User> users;
 
     public boolean isValid() {
         return questions.stream().anyMatch(question -> !question.isValid());
+    }
+
+    @Override
+    public int compareTo(Survey o) {
+        return Long.compare(this.getId(), o.getId());
     }
 }
