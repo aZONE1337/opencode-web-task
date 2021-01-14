@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Question's answers</title>
+</head>
+<body>
+<div th:each="answer : ${answers}">
+    <a th:text="${answer.getText()}"></a>
+    <a th:href="@{/constructor/answers/{id}/edit(id=${answer.getId()})}">Редактировать</a>
+</div>
+<a th:href="@{/constructor/answers/new(question_id=${question.getId()})}">Добавить ответ</a>
+</body>
+</html>

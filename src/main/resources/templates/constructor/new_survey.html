@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>New Survey</title>
+</head>
+<body>
+    <form th:method="post" th:action="@{/constructor/surveys}" th:object="${survey}">
+        <input type="text" th:field="*{name}" id="name" placeholder="Название анкеты" required>
+        <button type="submit">Создать</button>
+    </form>
+</body>
+</html>

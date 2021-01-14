@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Surveys</title>
 </head>
 <body>
-
-<div th:each="survey :  ${surveys}">
-    <a th:text="${survey.getName()}" th:href="@{/survey/{id}?question=1(id=${survey.getId()})}">survey</a>
+<div th:each="survey : ${surveys}">
+    <a th:text="${survey.getName()}"></a>
+    <a th:href="@{/constructor/surveys/{id}/edit(id=${survey.getId()})}">Редактировать</a>
+    <a th:href="@{/constructor/questions(survey_id=${survey.getId()})}">Вопросы</a>
 </div>
-
+<a href="/constructor/surveys/new">Создать анкету</a>
 </body>
 </html>

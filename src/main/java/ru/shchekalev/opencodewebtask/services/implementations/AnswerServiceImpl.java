@@ -22,4 +22,28 @@ public class AnswerServiceImpl implements AnswerService {
     public List<Answer> findAll() {
         return answerRepository.findAll();
     }
+
+    @Override
+    public List<Answer> findAllByQuestionId(Long id) {
+        return answerRepository.findAllByQuestionId(id);
+    }
+
+    @Override
+    public Answer save(Answer answer) {
+        return answerRepository.save(answer);
+    }
+
+    @Override
+    public Answer findById(Long id) {
+        return answerRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("Answer with id " + id + " doesn't exist"));
+    }
+
+    @Override
+    public Answer update(Long id, Answer newAnswer) {
+        Answer answer = answerRepository.getOne(id);
+        answer.setText(newAnswer.getText());
+
+        return answerRepository.save(answer);
+    }
 }

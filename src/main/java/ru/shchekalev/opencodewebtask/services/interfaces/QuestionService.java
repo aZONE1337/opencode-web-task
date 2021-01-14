@@ -6,7 +6,11 @@ import java.util.List;
 
 public interface QuestionService {
 
-    Question create(Question question);
+    Question save(Question question);
 
-    List<Question> findSurveysQuestions(Long surveyId);
+    List<Question> findAllBySurveyId(Long id);
+
+    Question findById(Long id);
+
+    Question update(Long id, Question newQuestion);
 }

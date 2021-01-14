@@ -1,17 +1,18 @@
 package ru.shchekalev.opencodewebtask.services.interfaces;
 
 import ru.shchekalev.opencodewebtask.model.entity.Survey;
-import ru.shchekalev.opencodewebtask.model.entity.User;
 
 import java.util.List;
 
 public interface SurveyService {
 
-    void create(Survey survey);
+    Survey save(Survey survey);
 
-    List<Survey> findAllSurveys();
+    List<Survey> findAll();
 
-    Survey findSurveyById(Long surveyId);
+    Survey findById(Long id);
 
-    List<Survey> findAvailableAndNotStarted(User user);
+    List<Survey> findAllAvailable();
+
+    Survey update(Long id, Survey newSurvey);
 }

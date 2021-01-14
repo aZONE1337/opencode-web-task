@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit question</title>
+</head>
+<body>
+    <form th:method="patch" th:action="@{/constructor/questions/{id}(id=${question.getId()})}" th:object="${question}">
+        <label for="text">Введите текст вопроса:</label>
+        <input type="text" th:field="*{text}" id="text" placeholder="Новый текст вопроса" required>
+        <label>Выберите тип вопроса:
+            <select th:field="*{type}">
+                <option th:value="SINGLE">Один вариант ответа</option>
+                <option th:value="MULTI">Несколько вариантов ответа</option>
+            </select>
+        </label>
+        <button type="submit">Сохранить</button>
+    </form>
+</body>
+</html>

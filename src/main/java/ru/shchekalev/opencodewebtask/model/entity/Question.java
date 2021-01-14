@@ -4,12 +4,14 @@ import lombok.Data;
 import ru.shchekalev.opencodewebtask.model.assistant.QuestionType;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @Entity
 @Table(name = "question")
 public class Question {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,5 +28,9 @@ public class Question {
     private Survey survey;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Answer> answers;
+    private Set<Answer> answers = new HashSet<>();
+
+    public boolean isValid() {
+        return answers.size() > 1;
+    }
 }

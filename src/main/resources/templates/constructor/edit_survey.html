@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Survey</title>
+</head>
+<body>
+    <form th:method="patch" th:action="@{/constructor/surveys/{id}(id=${survey.getId()})}" th:object="${survey}">
+        <input type="text" th:field="*{name}" id="name" placeholder="Новое название" required>
+        <button type="submit">Сохранить</button>
+    </form>
+</body>
+</html>

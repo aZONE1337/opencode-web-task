@@ -4,6 +4,7 @@ import lombok.Data;
 import ru.shchekalev.opencodewebtask.model.assistant.Availability;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -27,5 +28,12 @@ public class Survey {
     private User author;
 
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Question> questions;
+    private Set<Question> questions = new HashSet<>();
+
+    @ManyToMany(mappedBy = "completedSurveys")
+    private Set<User> users;
+
+    public boolean isValid() {
+        return questions.stream().anyMatch(question -> !question.isValid());
+    }
 }

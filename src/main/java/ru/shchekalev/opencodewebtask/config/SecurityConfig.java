@@ -29,6 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration", "/login").permitAll()
                 .antMatchers("/constructor/**").hasAnyAuthority(getAuthoritiesFromRole(Role.ADMIN))
                 .and()
+                .csrf().disable()
                 .formLogin();
     }
 

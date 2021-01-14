@@ -19,12 +19,26 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question create(Question question) {
+    public Question save(Question question) {
         return questionRepository.save(question);
     }
 
     @Override
-    public List<Question> findSurveysQuestions(Long surveyId) {
-        return questionRepository.findAllBySurveyId(surveyId);
+    public List<Question> findAllBySurveyId(Long id) {
+        return questionRepository.findAllBySurveyId(id);
+    }
+
+    @Override
+    public Question findById(Long id) {
+        return questionRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("Question with id " + id + " doesn't exist"));
+    }
+
+    @Override
+    public Question update(Long id, Question newQuestion) {
+        Question question = questionRepository.getOne(id);
+        question.setText(newQuestion.getText());
+
+        return questionRepository.save(question);
     }
 }

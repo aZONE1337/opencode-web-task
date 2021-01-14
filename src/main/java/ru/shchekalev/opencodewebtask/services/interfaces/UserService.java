@@ -4,7 +4,7 @@ import ru.shchekalev.opencodewebtask.model.entity.User;
 
 public interface UserService {
 
-    void create(User user);
+    void save(User user);
 
     User findByUsername(String username);
 }
