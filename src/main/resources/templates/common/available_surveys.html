@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Available surveys</title>
-</head>
+<head th:replace="fragments::all_header"></head>
 <body>
-<div th:each="survey : ${surveys}">
-    <a th:text="${survey.getName()}"></a>
-    <a th:href="@{/surveys/{id}(id=${survey.getId()}, question=0)}">Take a survey</a>
+<div class="container">
+    <div>
+        <th:block th:if="${admin}">
+            <div th:replace="fragments::adminbar"></div>
+        </th:block>
+        <th:block th:if="not ${admin}">
+            <div th:replace="fragments::userbar"></div>
+        </th:block>
+    </div>
+    <div th:if="${surveys.size() == 0}">
+        <p>
+            There're no available surveys. Come back later.
+        </p>
+    </div>
+    <div th:each="survey : ${surveys}">
+        <p th:text="${survey.getName()}"></p>
+        <a th:href="@{/surveys/{id}(id=${survey.getId()}, question=0)}">
+            Take a survey
+        </a>
+    </div>
 </div>
 </body>
 </html>

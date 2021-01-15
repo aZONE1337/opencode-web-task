@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>New question</title>
-</head>
+<head th:replace="fragments::all_header"></head>
 <body>
+<div class="container">
+    <div th:replace="fragments::adminbar"></div>
     <form th:method="post" th:action="@{/constructor/questions(survey_id=${survey.getId()})}" th:object="${question}">
-        <label for="text">Enter question here:</label>
-        <input type="text" th:field="*{text}" id="text" placeholder="Question text" required>
-        <label>Choose question type:
-            <select th:field="*{singleChoice}">
-                <option th:value="true">Single choice</option>
-                <option th:value="false">Multiple choice</option>
-            </select>
-        </label>
+        <p>
+            <label for="text">Enter question here:</label>
+            <input type="text" th:field="*{text}" id="text" placeholder="question text" required>
+        </p>
+        <p>
+            <label>Choose question type:
+                <select th:field="*{singleChoice}">
+                    <option th:value="true">Single choice</option>
+                    <option th:value="false">Multiple choice</option>
+                </select>
+            </label>
+        </p>
         <button type="submit">Create</button>
     </form>
+</div>
 </body>
 </html>

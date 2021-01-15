@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "question")
-public class Question implements Comparable<Question> {
+public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class Question implements Comparable<Question> {
     @Column(name = "text")
     private String text;
 
-    @Column(name = "type")
+    @Column(name = "isSingleChoice")
     private boolean singleChoice = true;
 
     @ManyToOne
@@ -29,10 +29,5 @@ public class Question implements Comparable<Question> {
 
     public boolean isValid() {
         return answers.size() > 1;
-    }
-
-    @Override
-    public int compareTo(Question o) {
-        return Long.compare(this.getId(), o.getId());
     }
 }

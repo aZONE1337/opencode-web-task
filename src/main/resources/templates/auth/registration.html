@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Регистрация</title>
@@ -8,17 +8,21 @@
 <form th:method="POST" th:action="@{/registration}" th:object="${user}">
     <p>
         <label for="username">Username</label>
-        <input type="text" th:field="*{username}" id="username" required>
+        <input type="text" th:field="*{username}" id="username" required maxlength="30" minlength="2">
     </p>
     <p>
         <label for="password">Password</label>
         <input type="password" th:field="*{password}" id="password" required>
     </p>
     <p>
-        <label for="role">Role</label>
-        <input type="text" th:field="*{role}" id="role" value="ADMIN" pattern="ADMIN|USER">
+        <label>Choose role:
+            <select th:field="*{role}" required>
+                <option th:value="ADMIN">admin</option>
+                <option th:value="USER">user</option>
+            </select>
+        </label>
     </p>
-    <button type="submit">Create </button>
+    <button type="submit">Create</button>
 </form>
 </body>
 </html>

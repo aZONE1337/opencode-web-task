@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.shchekalev.opencodewebtask.model.assistant.Role;
+import ru.shchekalev.opencodewebtask.model.security.Role;
 import ru.shchekalev.opencodewebtask.model.entity.User;
 import ru.shchekalev.opencodewebtask.repository.UserRepository;
 

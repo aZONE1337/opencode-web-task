@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Survey's questions</title>
-</head>
+<head th:replace="fragments::all_header"></head>
 <body>
-<div th:each="question : ${questions}">
-    <a th:text="${question.getText()}"></a>
-    <a th:href="@{/constructor/questions/{id}/edit(id=${question.getId()})}">Edit question</a>
-    <a th:href="@{/constructor/answers(question_id=${question.getId()})}">Answers</a>
+<div class="container">
+    <div th:replace="fragments::adminbar"></div>
+    <div th:if="${questions.size() == 0}">
+        <p>
+            There're no questions yet.
+        </p>
+    </div>
+    <div th:each="question : ${questions}">
+        <p th:text="${question.getText()}"></p>
+        <a th:href="@{/constructor/questions/{id}/edit(id=${question.getId()})}">
+            Edit question
+        </a>
+        <a th:href="@{/constructor/answers(question_id=${question.getId()})}">
+            Answers
+        </a>
+    </div>
+    <div>
+        <a th:href="@{/constructor/questions/new(survey_id=${survey.getId()})}">
+            Add question
+        </a>
+    </div>
 </div>
-<a th:href="@{/constructor/questions/new(survey_id=${survey.getId()})}">Add question</a>
 </body>
 </html>

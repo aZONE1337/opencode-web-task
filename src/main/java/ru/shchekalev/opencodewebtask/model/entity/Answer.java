@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "answer")
-public class Answer implements Comparable<Answer> {
+public class Answer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +23,4 @@ public class Answer implements Comparable<Answer> {
 
     @ManyToMany(mappedBy = "answers")
     private List<User> users;
-
-    @Override
-    public int compareTo(Answer o) {
-        return Long.compare(this.getId(), o.getId());
-    }
 }

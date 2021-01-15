@@ -58,7 +58,9 @@ public class SurveysConstructorController {
     @GetMapping("/{id}/edit")
     public String showEditSurveyPage(@PathVariable Long id,
                                      Model model) {
-        model.addAttribute("survey", surveyService.findById(id));
+        Survey survey = surveyService.findById(id);
+        model.addAttribute("survey", survey);
+        model.addAttribute("valid", survey.isValid());
 
         return "constructor/edit_survey";
     }

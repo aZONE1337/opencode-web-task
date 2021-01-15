@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Survey</title>
-</head>
+<head th:replace="fragments::all_header"></head>
 <body>
+<div class="container">
+    <div th:replace="fragments::adminbar"></div>
     <form th:method="patch" th:action="@{/constructor/surveys/{id}(id=${survey.getId()})}" th:object="${survey}">
-        <input type="text" th:field="*{name}" id="name" placeholder="New survey name" required>
+        <p>
+            <label for="name">Enter survey name here:</label>
+            <input type="text" th:field="*{name}" id="name" placeholder="new survey name" required>
+        </p>
+        <p th:if="${valid}">
+            <label>Choose current availability:
+                <select th:field="*{available}">
+                    <option th:value="true">Available</option>
+                    <option th:value="false">Unavailable</option>
+                </select>
+            </label>
+        </p>
         <button type="submit">Save</button>
     </form>
+</div>
 </body>
 </html>

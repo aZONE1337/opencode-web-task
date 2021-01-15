@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Surveys</title>
-</head>
+<head th:replace="fragments::all_header"></head>
 <body>
-<div th:each="survey : ${surveys}">
-    <a th:text="${survey.getName()}"></a>
-    <a th:href="@{/constructor/surveys/{id}/edit(id=${survey.getId()})}">Edit survey</a>
-    <a th:href="@{/constructor/questions(survey_id=${survey.getId()})}">Questions</a>
+<div class="container">
+    <div th:replace="fragments::adminbar"></div>
+    <div th:if="${surveys.size() == 0}">
+        <p>
+            There're no surveys yet.
+        </p>
+    </div>
+    <div th:each="survey : ${surveys}">
+        <p th:text="${survey.getName()}"></p>
+        <a th:href="@{/constructor/surveys/{id}/edit(id=${survey.getId()})}">
+            Edit survey
+        </a>
+        <a th:href="@{/constructor/questions(survey_id=${survey.getId()})}">
+            Questions
+        </a>
+    </div>
+    <div>
+        <a href="/constructor/surveys/new">
+            Create new survey
+        </a>
+    </div>
 </div>
-<a href="/constructor/surveys/new">Create new survey</a>
 </body>
 </html>

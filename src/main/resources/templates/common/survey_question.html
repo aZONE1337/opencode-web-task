@@ -1,22 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Question</title>
-</head>
+<head th:replace="fragments::all_header"></head>
+<head th:replace="fragments::all_header"></head>
 <body>
-<a th:text="'Вопрос №' + ${questionNum + 1}"></a>
-<a th:text="${question.getText()}"></a>
-<form th:method="post" th:action="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum})}" th:object="${user}">
-    <div th:each="answer : ${question.getAnswers()}">
-        <input th:type="${question.isSingleChoice()} ? 'radio' : 'checkbox'" th:field="*{answers}" th:value="${answer.getId()}" th:text="${answer.getText()}" required>
+<div class="container">
+    <div>
+        <th:block th:if="${admin}">
+            <div th:replace="fragments::adminbar"></div>
+        </th:block>
+        <th:block th:if="not ${admin}">
+            <div th:replace="fragments::userbar"></div>
+        </th:block>
     </div>
-    <button type="submit">Save answer</button>
-</form>
-<a th:if="${questionNum > 0}" th:href="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum} - 1)}">Previous question</a>
-<a th:if="${questionNum} < ${survey.getQuestions().size() - 1}" th:href="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum} + 1)}">Next question</a>
-<form th:if="${questionNum} == ${survey.getQuestions().size() - 1}" th:method="post" th:action="@{/surveys/{id}/complete(id=${survey.getId()})}">
-    <button type="submit">Save survey</button>
-</form>
+    <p th:text="'Вопрос №' + ${questionNum + 1}"></p>
+    <p th:text="${question.getText()}"></p>
+    <form th:method="post" th:action="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum})}"
+          th:object="${user}">
+        <p th:each="answer : ${question.getAnswers()}">
+            <label>
+                <input th:type="${question.singleChoice} ? 'radio' : 'checkbox'"
+                       th:field="*{answers}"
+                       th:value="${answer.getId()}"
+                       th:text="${answer.getText()}"
+                       required>
+            </label>
+        </p>
+        <button type="submit">Save answer</button>
+    </form>
+    <a th:if="${questionNum > 0}" th:href="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum} - 1)}">
+        Previous question
+    </a>
+    <a th:if="${questionNum} < ${survey.getQuestions().size() - 1}"
+       th:href="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum} + 1)}">
+        Next question
+    </a>
+    <form th:if="${questionNum} == ${survey.getQuestions().size() - 1}" th:method="post"
+          th:action="@{/surveys/{id}/complete(id=${survey.getId()})}">
+        <button type="submit">Save survey</button>
+    </form>
+</div>
 </body>
 </html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::all_header"></head>
+<body>
+<div class="container">
+    <div th:replace="fragments::adminbar"></div>
+    <div th:if="${surveys.size() == 0}">
+        <p>
+            There're no answered by any user surveys to show.
+        </p>
+    </div>
+    <div th:each="survey : ${surveys}">
+        <p>
+            Survey:
+        </p>
+        <a th:text="${survey.getName()}" th:href="@{/users_results/{id}(id=${survey.getId()})}">
+            List of answered users
+        </a>
+    </div>
+</div>
+</body>
+</html>

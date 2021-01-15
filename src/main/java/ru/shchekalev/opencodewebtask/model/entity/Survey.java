@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "survey")
-public class Survey implements Comparable<Survey> {
+public class Survey {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class Survey implements Comparable<Survey> {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "status")
+    @Column(name = "availability")
     private boolean available = false;
 
     @ManyToOne
@@ -31,11 +31,9 @@ public class Survey implements Comparable<Survey> {
     private List<User> users;
 
     public boolean isValid() {
-        return questions.stream().anyMatch(question -> !question.isValid());
-    }
+        if (questions.size() != 0)
+            return questions.stream().allMatch(Question::isValid);
 
-    @Override
-    public int compareTo(Survey o) {
-        return Long.compare(this.getId(), o.getId());
+        return false;
     }
 }

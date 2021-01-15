@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Survey</title>
-</head>
+<head th:replace="fragments::all_header"></head>
 <body>
-<div th:each="question : ${survey.getQuestions()}">
-    <div th:text="${question.getText()}"></div>
-    <div th:each="answer : ${question.getAnswers()}">
-        <input th:type="${!question.isSingleChoice()} ? 'radio' : 'checkbox'" th:text="${answer.getText()}" th:checked="${answer.getUsers().contains(user)}" th:disabled="${!answer.getUsers().contains(user)}">
+<div class="container">
+    <div>
+        <th:block th:if="${admin}">
+            <div th:replace="fragments::adminbar"></div>
+        </th:block>
+        <th:block th:if="not ${admin}">
+            <div th:replace="fragments::userbar"></div>
+        </th:block>
+    </div>
+    <div th:each="question : ${survey.getQuestions()}">
+        <p th:text="${question.getText()}"></p>
+        <div th:each="answer : ${question.getAnswers()}">
+            <input th:type="${question.singleChoice} ? 'radio' : 'checkbox'"
+                   th:text="${answer.getText()}"
+                   th:checked="${answer.getUsers().contains(user)}"
+                   th:disabled="${!answer.getUsers().contains(user)}">
+        </div>
     </div>
 </div>
 </body>

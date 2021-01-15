@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::all_header"></head>
+<body>
+<div class="container">
+    <div th:replace="fragments::adminbar"></div>
+    <div th:each="question : ${survey.getQuestions()}">
+        <p th:text="${question.getText()}"></p>
+        <div th:each="answer : ${question.getAnswers()}">
+            <label>Choose an option(s):
+                <input th:type="${question.singleChoice} ? 'radio' : 'checkbox'"
+                       th:text="${answer.getText()}"
+                       th:checked="${answer.getUsers().contains(user)}"
+                       th:disabled="${!answer.getUsers().contains(user)}">
+            </label>
+        </div>
+    </div>
+</div>
+</body>
+</html>

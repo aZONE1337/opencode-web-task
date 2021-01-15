@@ -29,7 +29,7 @@ public class RegisterController {
     }
 
     @PostMapping
-    public String createUser(@ModelAttribute("user") User user) {
+    public String createUser(@ModelAttribute User user) {
         userService.save(user);
 
         return "redirect:/login";

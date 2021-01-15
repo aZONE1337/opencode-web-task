@@ -1,7 +1,7 @@
 package ru.shchekalev.opencodewebtask.model.entity;
 
 import lombok.Data;
-import ru.shchekalev.opencodewebtask.model.assistant.Role;
+import ru.shchekalev.opencodewebtask.model.security.Role;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "user")
-public class User implements Comparable<User> {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,9 +43,4 @@ public class User implements Comparable<User> {
             inverseJoinColumns = { @JoinColumn(name = "survey_id") }
     )
     List<Survey> completedSurveys;
-
-    @Override
-    public int compareTo(User o) {
-        return Long.compare(this.getId(), o.getId());
-    }
 }

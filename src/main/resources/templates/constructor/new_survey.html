@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" >
-    <title>New Survey</title>
-</head>
+<head th:replace="fragments::all_header"></head>
 <body>
+<div class="container">
+    <div th:replace="fragments::adminbar"></div>
     <form th:method="post" th:action="@{/constructor/surveys}" th:object="${survey}">
-        <input type="text" th:field="*{name}" id="name" placeholder="Survey name" required>
-        <select th:field="*{available}">
-            <option th:value="true">Available</option>
-            <option th:value="false">Unavailable</option>
-        </select>
+        <p>
+            <label for="name">Enter survey name here:</label>
+            <input type="text" th:field="*{name}" id="name" placeholder="Survey name" required>
+        </p>
+        <p>
+            By default survey will be unavailable if invalid.
+        </p>
         <button type="submit">Create</button>
     </form>
+</div>
 </body>
 </html>

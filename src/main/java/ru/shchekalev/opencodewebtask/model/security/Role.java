@@ -1,4 +1,4 @@
-package ru.shchekalev.opencodewebtask.model.assistant;
+package ru.shchekalev.opencodewebtask.model.security;
 
 import java.util.Set;
 

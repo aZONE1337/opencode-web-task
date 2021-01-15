@@ -44,6 +44,7 @@ public class SurveyServiceImpl implements SurveyService {
     public Survey update(Long id, Survey newSurvey) {
         Survey survey = surveyRepository.getOne(id);
         survey.setName(newSurvey.getName());
+        survey.setAvailable(newSurvey.isAvailable());
 
         return surveyRepository.save(survey);
     }

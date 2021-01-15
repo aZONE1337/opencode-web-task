@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Question's answers</title>
-</head>
+<head th:replace="fragments::all_header"></head>
 <body>
-<div th:each="answer : ${answers}">
-    <a th:text="${answer.getText()}"></a>
-    <a th:href="@{/constructor/answers/{id}/edit(id=${answer.getId()})}">Edit</a>
+<div class="container">
+    <div th:replace="fragments::adminbar"></div>
+    <div th:if="${answers.size() == 0}">
+        <p>
+            There're no answer options yet.
+        </p>
+    </div>
+    <div th:each="answer : ${answers}">
+        <p th:text="${answer.getText()}"></p>
+        <a th:href="@{/constructor/answers/{id}/edit(id=${answer.getId()})}">Edit</a>
+    </div>
+    <div>
+        <a th:href="@{/constructor/answers/new(question_id=${question.getId()})}">
+            Add answer option
+        </a>
+    </div>
 </div>
-<a th:href="@{/constructor/answers/new(question_id=${question.getId()})}">Add answer option</a>
 </body>
 </html>
