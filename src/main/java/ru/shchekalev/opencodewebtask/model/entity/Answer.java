@@ -21,6 +21,6 @@ public class Answer {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @ManyToMany(mappedBy = "answers")
+    @ManyToMany(mappedBy = "answers", cascade = CascadeType.ALL)
     private List<User> users;
 }

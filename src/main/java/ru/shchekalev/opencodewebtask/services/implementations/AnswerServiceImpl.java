@@ -57,7 +57,6 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public List<Survey> findAllStartedSurveys(List<Answer> userAnswers) {
         //TODO
-
         return null;
     }
 }

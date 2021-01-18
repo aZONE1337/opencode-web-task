@@ -11,15 +11,16 @@
             <div th:replace="fragments::userbar"></div>
         </th:block>
     </div>
+    <h2>Available surveys</h2>
     <div th:if="${surveys.size() == 0}">
         <p>
             There're no available surveys. Come back later.
         </p>
     </div>
     <div th:each="survey : ${surveys}">
-        <p th:text="${survey.getName()}"></p>
+        <span th:text="${survey.getName()}"></span>
         <a th:href="@{/surveys/{id}(id=${survey.getId()}, question=0)}">
-            Take a survey
+            Go
         </a>
     </div>
 </div>

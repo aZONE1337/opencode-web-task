@@ -53,4 +53,19 @@ public class SurveyServiceImpl implements SurveyService {
     public List<Survey> findAllCompletedByUser(User user) {
         return surveyRepository.findAllByUsers(user);
     }
+
+    @Override
+    public List<Survey> findAllAvailableAndNotCompletedByUser(User user) {
+        List<Survey> available = surveyRepository.findAllByAvailableIsTrue();
+        List<Survey> completed = surveyRepository.findAllByUsers(user);
+
+        available.removeAll(completed);
+
+        return available;
+    }
+
+    @Override
+    public void deleteSurveyById(Long id) {
+        surveyRepository.deleteById(id);
+    }
 }

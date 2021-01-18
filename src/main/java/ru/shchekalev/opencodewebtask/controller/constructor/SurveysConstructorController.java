@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.shchekalev.opencodewebtask.model.entity.Survey;
+import ru.shchekalev.opencodewebtask.model.entity.User;
 import ru.shchekalev.opencodewebtask.services.interfaces.SurveyService;
 import ru.shchekalev.opencodewebtask.services.interfaces.UserService;
 
@@ -69,6 +70,19 @@ public class SurveysConstructorController {
     public String editSurvey(@PathVariable Long id,
                              @ModelAttribute Survey newSurvey) {
         surveyService.update(id, newSurvey);
+
+        return "redirect:/constructor/surveys";
+    }
+
+    @DeleteMapping("/{id}/delete")
+    public String deleteSurvey(@PathVariable("id") Long surveyId,
+                               @AuthenticationPrincipal UserDetails currUser) {
+        Survey survey = surveyService.findById(surveyId);
+        User user = userService.findByUsername(currUser.getUsername());
+
+        user.getCompletedSurveys().remove(survey);
+
+        surveyService.deleteSurveyById(surveyId);
 
         return "redirect:/constructor/surveys";
     }

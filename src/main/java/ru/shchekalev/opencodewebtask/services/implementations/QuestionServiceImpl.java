@@ -2,11 +2,15 @@ package ru.shchekalev.opencodewebtask.services.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.shchekalev.opencodewebtask.model.entity.Answer;
 import ru.shchekalev.opencodewebtask.model.entity.Question;
+import ru.shchekalev.opencodewebtask.model.entity.Survey;
+import ru.shchekalev.opencodewebtask.model.entity.User;
 import ru.shchekalev.opencodewebtask.repository.QuestionRepository;
 import ru.shchekalev.opencodewebtask.services.interfaces.QuestionService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -40,5 +44,16 @@ public class QuestionServiceImpl implements QuestionService {
         question.setText(newQuestion.getText());
 
         return questionRepository.save(question);
+    }
+
+    @Override
+    public List<Question> getNotAnsweredQuestions(Survey survey,  User user) {
+        List<Question> answeredQuestions = user.getAnswers().stream()
+                .map(Answer::getQuestion)
+                .collect(Collectors.toList());
+
+        return survey.getQuestions().stream()
+                .filter(question -> !answeredQuestions.contains(question))
+                .collect(Collectors.toList());
     }
 }

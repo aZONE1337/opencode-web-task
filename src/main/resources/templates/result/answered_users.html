@@ -13,10 +13,10 @@
         </a>
     </div>
     <div th:each="user : ${answeredUsers}">
-        <p th:text="${user.getUsername()}">
+        <p th:text="'User: ' + ${user.getUsername()}">
             Username
         </p>
-        <a th:href="@{/users_results/{id}(id=${user.getId()}, survey=${surveyId})}">
+        <a th:href="@{/users_results/user/{id}(id=${user.getId()}, survey=${surveyId})}">
             View answers
         </a>
     </div>

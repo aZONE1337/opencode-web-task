@@ -4,19 +4,28 @@
 <body>
 <div class="container">
     <div th:replace="fragments::adminbar"></div>
+    <h2>Question's answers</h2>
     <div th:if="${answers.size() == 0}">
         <p>
             There're no answer options yet.
         </p>
     </div>
-    <div th:each="answer : ${answers}">
+    <div th:each="answer, answrStat : ${answers}">
+        <p th:text="'Option #: ' + ${answrStat.count}"></p>
         <p th:text="${answer.getText()}"></p>
         <a th:href="@{/constructor/answers/{id}/edit(id=${answer.getId()})}">Edit</a>
     </div>
     <div>
-        <a th:href="@{/constructor/answers/new(question_id=${question.getId()})}">
-            Add answer option
-        </a>
+        <p>
+            <a th:href="@{/constructor/answers/new(question_id=${question.getId()})}">
+                Add option
+            </a>
+        </p>
+        <p>
+            <a th:href="@{/constructor/questions(survey_id=${question.getSurvey().getId()})}">
+                Back
+            </a>
+        </p>
     </div>
 </div>
 </body>

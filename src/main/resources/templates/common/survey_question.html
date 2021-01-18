@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments::all_header"></head>
-<head th:replace="fragments::all_header"></head>
 <body>
 <div class="container">
     <div>
@@ -12,7 +11,7 @@
             <div th:replace="fragments::userbar"></div>
         </th:block>
     </div>
-    <p th:text="'Вопрос №' + ${questionNum + 1}"></p>
+    <p th:text="'Question #: ' + ${questionNum + 1}"></p>
     <p th:text="${question.getText()}"></p>
     <form th:method="post" th:action="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum})}"
           th:object="${user}">
@@ -25,18 +24,17 @@
                        required>
             </label>
         </p>
-        <button type="submit">Save answer</button>
-    </form>
-    <a th:if="${questionNum > 0}" th:href="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum} - 1)}">
-        Previous question
-    </a>
-    <a th:if="${questionNum} < ${survey.getQuestions().size() - 1}"
-       th:href="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum} + 1)}">
-        Next question
-    </a>
-    <form th:if="${questionNum} == ${survey.getQuestions().size() - 1}" th:method="post"
-          th:action="@{/surveys/{id}/complete(id=${survey.getId()})}">
-        <button type="submit">Save survey</button>
+        <a class="btn" th:if="${questionNum > 0}"
+           th:href="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum} - 1)}">
+            Previous question
+        </a>
+        <button type="submit" th:if="${questionNum + 1} < ${survey.getQuestions().size()}"
+                th:href="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum} + 1)}">
+            Save and next
+        </button>
+        <button type="submit" th:if="${questionNum + 1} == ${survey.getQuestions().size()}">
+            Submit survey
+        </button>
     </form>
 </div>
 </body>

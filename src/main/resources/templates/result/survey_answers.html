@@ -4,10 +4,11 @@
 <body>
 <div class="container">
     <div th:replace="fragments::adminbar"></div>
-    <div th:each="question : ${survey.getQuestions()}">
+    <div th:each="question, qstnStat : ${survey.getQuestions()}">
+        <p th:text="'Question #: ' + ${qstnStat.count}"></p>
         <p th:text="${question.getText()}"></p>
         <div th:each="answer : ${question.getAnswers()}">
-            <label>Choose an option(s):
+            <label>
                 <input th:type="${question.singleChoice} ? 'radio' : 'checkbox'"
                        th:text="${answer.getText()}"
                        th:checked="${answer.getUsers().contains(user)}"

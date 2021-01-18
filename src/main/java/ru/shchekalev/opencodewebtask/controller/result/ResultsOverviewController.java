@@ -36,6 +36,7 @@ public class ResultsOverviewController {
     public String getAnsweredUsers(@PathVariable("id") Long surveyId,
                                    Model model) {
         Survey survey = surveyService.findById(surveyId);
+
         model.addAttribute("answeredUsers", userService.findAllByCompletedSurveys(survey));
         model.addAttribute("surveyId", surveyId);
 

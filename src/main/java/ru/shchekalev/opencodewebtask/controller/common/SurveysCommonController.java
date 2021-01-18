@@ -6,10 +6,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.shchekalev.opencodewebtask.model.security.Role;
+import ru.shchekalev.opencodewebtask.model.entity.Answer;
 import ru.shchekalev.opencodewebtask.model.entity.Question;
 import ru.shchekalev.opencodewebtask.model.entity.Survey;
 import ru.shchekalev.opencodewebtask.model.entity.User;
+import ru.shchekalev.opencodewebtask.model.security.Role;
 import ru.shchekalev.opencodewebtask.services.interfaces.QuestionService;
 import ru.shchekalev.opencodewebtask.services.interfaces.SurveyService;
 import ru.shchekalev.opencodewebtask.services.interfaces.UserService;
@@ -39,10 +40,11 @@ public class SurveysCommonController {
     }
 
     @GetMapping("/surveys")
-    public String getAvailableSurveys(@AuthenticationPrincipal UserDetails currUser,
+    public String getAvailableAndNotCompletedSurveys(@AuthenticationPrincipal UserDetails currUser,
                                       Model model) {
         User user = userService.findByUsername(currUser.getUsername());
-        model.addAttribute("surveys", surveyService.findAllAvailable());
+
+        model.addAttribute("surveys", surveyService.findAllAvailableAndNotCompletedByUser(user));
         model.addAttribute("admin", user.getRole() == Role.ADMIN);
 
         return "common/available_surveys";
@@ -76,12 +78,16 @@ public class SurveysCommonController {
         return "common/completed_survey";
     }
 
-    @GetMapping("/in_process")
-    public String getInProcessSurveys(@AuthenticationPrincipal UserDetails currUser,
-                                      Model model) {
-        //TODO... show not completed surveys and load progress to continue answering
+    @PatchMapping("/completed/{id}")
+    public String resetSurvey(@PathVariable("id") Long surveyId,
+                              @AuthenticationPrincipal UserDetails currUser) {
+        User user = userService.findByUsername(currUser.getUsername());
+        Survey survey = surveyService.findById(surveyId);
 
-        return "common/in_process";
+        user.getCompletedSurveys().remove(survey);
+        userService.save(user);
+
+        return "redirect:/completed";
     }
 
     @GetMapping("/surveys/{id}")
@@ -108,22 +114,36 @@ public class SurveysCommonController {
                                  @AuthenticationPrincipal UserDetails currUser,
                                  @ModelAttribute User user) {
          User userToUpd = userService.findByUsername(currUser.getUsername());
+         List<Answer> currAnswers = userToUpd.getAnswers();
 
-         userToUpd.getAnswers().addAll(user.getAnswers());
+         Survey survey = surveyService.findById(surveyId);
+         List<Answer> answerOptions = survey.getQuestions().get(questionNum).getAnswers();
+
+         currAnswers.removeAll(answerOptions);
+         currAnswers.addAll(user.getAnswers());
+
+         String redirectStr;
+
+         if (survey.getQuestions().size() == ++questionNum) {
+             userToUpd.getCompletedSurveys().add(survey);
+             redirectStr = "surveys";
+         } else
+             redirectStr = "surveys/" + surveyId + "?question=" + questionNum;
+
          userService.save(userToUpd);
 
-         return "redirect:/surveys/" + surveyId + "?question=" + questionNum;
+         return "redirect:/" + redirectStr;
     }
 
-    @PostMapping("/surveys/{id}/complete")
-    public String saveUserProgress(@PathVariable("id") Long surveyId,
-                                   @AuthenticationPrincipal UserDetails currUser) {
-        User user = userService.findByUsername(currUser.getUsername());
-        Survey survey = surveyService.findById(surveyId);
-
-        user.getCompletedSurveys().add(survey);
-        userService.save(user);
-
-        return "redirect:/surveys";
-    }
+//    @PostMapping("/surveys/{id}/complete")
+//    public String saveUserProgress(@PathVariable("id") Long surveyId,
+//                                   @AuthenticationPrincipal UserDetails currUser) {
+//        User user = userService.findByUsername(currUser.getUsername());
+//        Survey survey = surveyService.findById(surveyId);
+//
+//        user.getCompletedSurveys().add(survey);
+//        userService.save(user);
+//
+//        return "redirect:/surveys";
+//    }
 }

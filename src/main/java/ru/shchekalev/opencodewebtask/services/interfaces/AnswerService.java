@@ -18,6 +18,8 @@ public interface AnswerService {
 
     Answer update(Long id, Answer newAnswer);
 
+//    void updateUserAnswers();
+
     List<Answer> findAllByUsers(User user);
 
     List<Survey> findAllStartedSurveys(List<Answer> userAnswers); //TODO

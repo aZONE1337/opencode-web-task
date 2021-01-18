@@ -9,9 +9,10 @@
             <label for="name">Enter survey name here:</label>
             <input type="text" th:field="*{name}" id="name" placeholder="Survey name" required>
         </p>
-        <p>
-            By default survey will be unavailable if invalid.
-        </p>
+        <p>Note:</p>
+        <p> You can set availability on edit if survey is valid.</p>
+        <p>By default survey will be unavailable.</p>
+        <p>Valid survey has at least one question with at least two answer options.</p>
         <button type="submit">Create</button>
     </form>
 </div>

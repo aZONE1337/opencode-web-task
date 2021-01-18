@@ -4,24 +4,35 @@
 <body>
 <div class="container">
     <div th:replace="fragments::adminbar"></div>
+    <h2>Survey's questions</h2>
     <div th:if="${questions.size() == 0}">
         <p>
             There're no questions yet.
         </p>
     </div>
-    <div th:each="question : ${questions}">
+    <div th:each="question, qstnStat : ${questions}">
+        <p th:text="'Question #: ' + ${qstnStat.count}"></p>
         <p th:text="${question.getText()}"></p>
         <a th:href="@{/constructor/questions/{id}/edit(id=${question.getId()})}">
-            Edit question
+            Edit
         </a>
-        <a th:href="@{/constructor/answers(question_id=${question.getId()})}">
-            Answers
-        </a>
+        <p>
+            <a th:href="@{/constructor/answers(question_id=${question.getId()})}">
+                View answers
+            </a>
+        </p>
     </div>
     <div>
-        <a th:href="@{/constructor/questions/new(survey_id=${survey.getId()})}">
-            Add question
-        </a>
+        <p>
+            <a th:href="@{/constructor/questions/new(survey_id=${survey.getId()})}">
+                Add new
+            </a>
+        </p>
+        <p>
+            <a href="/constructor/surveys/">
+                Back
+            </a>
+        </p>
     </div>
 </div>
 </body>

@@ -18,4 +18,8 @@ public interface SurveyService {
     Survey update(Long id, Survey newSurvey);
 
     List<Survey> findAllCompletedByUser(User user);
+
+    List<Survey> findAllAvailableAndNotCompletedByUser(User user);
+
+    void deleteSurveyById(Long id);
 }

@@ -30,6 +30,12 @@ public class RegisterController {
 
     @PostMapping
     public String createUser(@ModelAttribute User user) {
+//
+//        if (userService.findByUsername(user.getUsername()) != null) {
+//            System.out.println(user.getUsername());
+//            return "redirect:/login";
+//        }
+
         userService.save(user);
 
         return "redirect:/login";

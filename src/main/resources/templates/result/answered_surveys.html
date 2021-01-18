@@ -4,6 +4,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments::adminbar"></div>
+    <h2>Users' results</h2>
     <div th:if="${surveys.size() == 0}">
         <p>
             There're no answered by any user surveys to show.

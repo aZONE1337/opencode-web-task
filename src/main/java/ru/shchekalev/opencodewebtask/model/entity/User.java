@@ -28,7 +28,7 @@ public class User {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Survey> createdSurveys;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "user_answer",
             joinColumns = { @JoinColumn(name = "user_id") },
@@ -36,7 +36,7 @@ public class User {
     )
     List<Answer> answers;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "user_survey",
             joinColumns = { @JoinColumn(name = "user_id") },
