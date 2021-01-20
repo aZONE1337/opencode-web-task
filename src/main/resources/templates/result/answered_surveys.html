@@ -2,21 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments::all_header"></head>
 <body>
-<div class="container">
+<div class="container-fluid bg-dark text-light" style="height: 100vh">
     <div th:replace="fragments::adminbar"></div>
-    <h2>Users' results</h2>
+    <!--    <h2>Users' results</h2>-->
     <div th:if="${surveys.size() == 0}">
-        <p>
-            There're no answered by any user surveys to show.
-        </p>
+        <h2>There're no answered by any user surveys to show.</h2>
     </div>
-    <div th:each="survey : ${surveys}">
-        <p>
-            Survey:
-        </p>
-        <a th:text="${survey.getName()}" th:href="@{/users_results/{id}(id=${survey.getId()})}">
-            List of answered users
-        </a>
+    <div class="card border-light bg-light text-dark m-1 p-2" th:each="survey : ${surveys}">
+        <div class="card-body">
+            <h4 class="card-title">Survey:</h4>
+            <a class="card-text" th:text="${survey.getName()}" th:href="@{/users_results/{id}(id=${survey.getId()})}">
+                List of answered users
+            </a>
+        </div>
     </div>
 </div>
 </body>

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments::all_header"></head>
 <body>
-<div class="container">
+<div class="container-fluid bg-dark text-light" style="height: 100vh">
     <div>
         <th:block th:if="${admin}">
             <div th:replace="fragments::adminbar"></div>
@@ -11,22 +11,25 @@
             <div th:replace="fragments::userbar"></div>
         </th:block>
     </div>
-    <h2>Completed surveys</h2>
+    <!--    <h2>Completed surveys</h2>-->
     <div th:if="${surveys.size() == 0}">
-        <p>
+        <h2>
             There're no completed surveys to show.
-        </p>
+        </h2>
     </div>
-    <div th:each="survey : ${surveys}">
-        <p th:text="${survey.getName()}"></p>
-        <a th:href="@{/completed/{id}(id=${survey.getId()})}">
-            View answers
-        </a>
-        <form th:method="patch" th:action="@{/completed/{id}(id=${survey.getId()})}">
-            <button type="submit" onclick="return confirm('Are you sure you want to reset the survey?');">
-                Reset result
-            </button>
-        </form>
+    <div class="card border-light bg-light text-dark m-1 p-2" th:each="survey : ${surveys}">
+        <div class="card-body">
+            <h4 class="card-title" th:text="${survey.getName()}"></h4>
+            <form th:method="patch" th:action="@{/completed/{id}(id=${survey.getId()})}">
+                <a class="card-link btn btn-outline-dark" th:href="@{/completed/{id}(id=${survey.getId()})}">
+                    View answers
+                </a>
+                <button class="card-link btn btn-outline-dark" type="submit"
+                        onclick="return confirm('Are you sure you want to reset the survey?');">
+                    Reset result
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 </body>

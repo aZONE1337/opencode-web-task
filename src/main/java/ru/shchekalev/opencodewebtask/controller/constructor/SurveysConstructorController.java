@@ -41,14 +41,6 @@ public class SurveysConstructorController {
         return "redirect:/constructor/surveys";
     }
 
-//    @GetMapping("/{id}")
-//    public String getSurvey(@PathVariable Long id,
-//                            Model model) {
-//        model.addAttribute("survey", surveyService.findById(id));
-//
-//        return "constructor/survey";
-//    }
-
     @GetMapping("/new")
     public String showNewSurveyPage(Model model) {
         model.addAttribute("survey", new Survey());
@@ -60,6 +52,7 @@ public class SurveysConstructorController {
     public String showEditSurveyPage(@PathVariable Long id,
                                      Model model) {
         Survey survey = surveyService.findById(id);
+
         model.addAttribute("survey", survey);
         model.addAttribute("valid", survey.isValid());
 
@@ -74,15 +67,13 @@ public class SurveysConstructorController {
         return "redirect:/constructor/surveys";
     }
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public String deleteSurvey(@PathVariable("id") Long surveyId,
                                @AuthenticationPrincipal UserDetails currUser) {
         Survey survey = surveyService.findById(surveyId);
         User user = userService.findByUsername(currUser.getUsername());
 
-        user.getCompletedSurveys().remove(survey);
-
-        surveyService.deleteSurveyById(surveyId);
+        //TODO...
 
         return "redirect:/constructor/surveys";
     }

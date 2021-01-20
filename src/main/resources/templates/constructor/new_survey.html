@@ -2,19 +2,25 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments::all_header"></head>
 <body>
-<div class="container">
+<div class="container-fluid bg-dark text-light" style="height: 100vh">
     <div th:replace="fragments::adminbar"></div>
-    <form th:method="post" th:action="@{/constructor/surveys}" th:object="${survey}">
-        <p>
-            <label for="name">Enter survey name here:</label>
-            <input type="text" th:field="*{name}" id="name" placeholder="Survey name" required>
-        </p>
-        <p>Note:</p>
-        <p> You can set availability on edit if survey is valid.</p>
-        <p>By default survey will be unavailable.</p>
-        <p>Valid survey has at least one question with at least two answer options.</p>
-        <button type="submit">Create</button>
-    </form>
+    <div class="card border-light bg-light text-dark m-1 p-2">
+        <div class="card-body">
+            <form th:method="post" th:action="@{/constructor/surveys}" th:object="${survey}">
+                <p>
+                    <label for="name">Enter survey name here:</label>
+                    <input type="text" th:field="*{name}" id="name" placeholder="Survey name" required>
+                </p>
+                <p class="card-text">
+                    Note:
+                    You can set availability on edit if survey is valid.
+                    By default survey will be unavailable.
+                    Valid survey has at least one question with at least two answer options.
+                </p>
+                <button class="card-link btn btn-outline-dark" type="submit">Create</button>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>

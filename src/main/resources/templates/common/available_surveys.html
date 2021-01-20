@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments::all_header"></head>
 <body>
-<div class="container">
+<div class="container-fluid bg-dark text-light" style="height: 100vh">
     <div>
         <th:block th:if="${admin}">
             <div th:replace="fragments::adminbar"></div>
@@ -11,17 +11,17 @@
             <div th:replace="fragments::userbar"></div>
         </th:block>
     </div>
-    <h2>Available surveys</h2>
+    <!--    <h2>Available surveys</h2>-->
     <div th:if="${surveys.size() == 0}">
-        <p>
-            There're no available surveys. Come back later.
-        </p>
+        <h2>There're no available surveys. Come back later.</h2>
     </div>
-    <div th:each="survey : ${surveys}">
-        <span th:text="${survey.getName()}"></span>
-        <a th:href="@{/surveys/{id}(id=${survey.getId()}, question=0)}">
-            Go
-        </a>
+    <div class="card border-light bg-light text-dark m-1 p-2" th:each="survey : ${surveys}">
+        <div class="card-body">
+            <h4 class="card-title" th:text="${survey.getName()}"></h4>
+            <a class="card-link btn btn-outline-dark" th:href="@{/surveys/{id}(id=${survey.getId()}, question=0)}">
+                Go
+            </a>
+        </div>
     </div>
 </div>
 </body>

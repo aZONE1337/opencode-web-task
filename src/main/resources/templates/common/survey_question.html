@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments::all_header"></head>
 <body>
-<div class="container">
+<div class="container-fluid bg-dark text-light" style="height: 100vh">
     <div>
         <th:block th:if="${admin}">
             <div th:replace="fragments::adminbar"></div>
@@ -11,31 +11,35 @@
             <div th:replace="fragments::userbar"></div>
         </th:block>
     </div>
-    <p th:text="'Question #: ' + ${questionNum + 1}"></p>
-    <p th:text="${question.getText()}"></p>
-    <form th:method="post" th:action="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum})}"
-          th:object="${user}">
-        <p th:each="answer : ${question.getAnswers()}">
-            <label>
-                <input th:type="${question.singleChoice} ? 'radio' : 'checkbox'"
-                       th:field="*{answers}"
-                       th:value="${answer.getId()}"
-                       th:text="${answer.getText()}"
-                       required>
-            </label>
-        </p>
-        <a class="btn" th:if="${questionNum > 0}"
-           th:href="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum} - 1)}">
-            Previous question
-        </a>
-        <button type="submit" th:if="${questionNum + 1} < ${survey.getQuestions().size()}"
-                th:href="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum} + 1)}">
-            Save and next
-        </button>
-        <button type="submit" th:if="${questionNum + 1} == ${survey.getQuestions().size()}">
-            Submit survey
-        </button>
-    </form>
+    <div class="card border-light bg-light text-dark m-1 p-2">
+        <h4 class="card-title" th:text="'Question #: ' + ${questionNum + 1}"></h4>
+        <p class="card-text" th:text="${question.getText()}"></p>
+        <form th:method="post" th:action="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum})}"
+              th:object="${user}">
+            <p th:each="answer : ${question.getAnswers()}">
+                <label>
+                    <input th:type="${question.singleChoice} ? 'radio' : 'checkbox'"
+                           th:field="*{answers}"
+                           th:value="${answer.getId()}"
+                           th:text="${answer.getText()}"
+                           required>
+                </label>
+            </p>
+            <a class="card-link btn btn-outline-dark" th:if="${questionNum > 0}"
+               th:href="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum} - 1)}">
+                Previous question
+            </a>
+            <button class="card-link btn btn-outline-dark" type="submit"
+                    th:if="${questionNum + 1} < ${survey.getQuestions().size()}"
+                    th:href="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum} + 1)}">
+                Save and next
+            </button>
+            <button class="card-link btn btn-outline-dark" type="submit"
+                    th:if="${questionNum + 1} == ${survey.getQuestions().size()}">
+                Submit survey
+            </button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

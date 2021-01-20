@@ -2,30 +2,33 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments::all_header"></head>
 <body>
-<div class="container">
+<div class="container-fluid bg-dark text-light" style="height: 100vh">
     <div th:replace="fragments::adminbar"></div>
-    <h2>Question's answers</h2>
+    <!--    <h2>Question's answers</h2>-->
     <div th:if="${answers.size() == 0}">
-        <p>
-            There're no answer options yet.
-        </p>
+        <h2>There're no answer options yet.</h2>
     </div>
-    <div th:each="answer, answrStat : ${answers}">
-        <p th:text="'Option #: ' + ${answrStat.count}"></p>
-        <p th:text="${answer.getText()}"></p>
-        <a th:href="@{/constructor/answers/{id}/edit(id=${answer.getId()})}">Edit</a>
+    <div class="card border-light bg-light text-dark m-1 p-2" th:each="answer, answrStat : ${answers}">
+        <div class="card-body">
+            <h4 class="card-title" th:text="'Option #: ' + ${answrStat.count}"></h4>
+            <p class="card-text" th:text="${answer.getText()}"></p>
+            <a class="card-link btn btn-outline-dark"
+               th:if="not ${question.getSurvey().available}"
+               th:href="@{/constructor/answers/{id}/edit(id=${answer.getId()})}">
+                Edit
+            </a>
+        </div>
     </div>
-    <div>
-        <p>
-            <a th:href="@{/constructor/answers/new(question_id=${question.getId()})}">
-                Add option
-            </a>
-        </p>
-        <p>
-            <a th:href="@{/constructor/questions(survey_id=${question.getSurvey().getId()})}">
-                Back
-            </a>
-        </p>
+    <div class="m-1">
+        <a class="btn btn-outline-dark bg-light text-dark"
+           th:href="@{/constructor/questions(survey_id=${question.getSurvey().getId()})}">
+            Back
+        </a>
+        <a class="btn btn-outline-dark bg-light text-dark"
+           th:if="not ${question.getSurvey().available}"
+           th:href="@{/constructor/answers/new(question_id=${question.getId()})}">
+            Add option
+        </a>
     </div>
 </div>
 </body>

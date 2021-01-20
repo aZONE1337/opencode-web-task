@@ -15,6 +15,4 @@ public interface QuestionService {
     Question findById(Long id);
 
     Question update(Long id, Question newQuestion);
-
-    List<Question> getNotAnsweredQuestions(Survey survey, User user);
 }

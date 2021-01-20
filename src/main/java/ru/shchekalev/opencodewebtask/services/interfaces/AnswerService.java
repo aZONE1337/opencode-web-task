@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface AnswerService {
 
-    List<Answer> findAll();
-
     List<Answer> findAllByQuestionId(Long id);
 
     Answer save(Answer answer);
@@ -17,10 +15,4 @@ public interface AnswerService {
     Answer findById(Long id);
 
     Answer update(Long id, Answer newAnswer);
-
-//    void updateUserAnswers();
-
-    List<Answer> findAllByUsers(User user);
-
-    List<Survey> findAllStartedSurveys(List<Answer> userAnswers); //TODO
 }

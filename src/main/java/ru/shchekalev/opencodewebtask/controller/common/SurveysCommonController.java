@@ -134,16 +134,4 @@ public class SurveysCommonController {
 
          return "redirect:/" + redirectStr;
     }
-
-//    @PostMapping("/surveys/{id}/complete")
-//    public String saveUserProgress(@PathVariable("id") Long surveyId,
-//                                   @AuthenticationPrincipal UserDetails currUser) {
-//        User user = userService.findByUsername(currUser.getUsername());
-//        Survey survey = surveyService.findById(surveyId);
-//
-//        user.getCompletedSurveys().add(survey);
-//        userService.save(user);
-//
-//        return "redirect:/surveys";
-//    }
 }

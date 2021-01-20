@@ -2,23 +2,24 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments::all_header"></head>
 <body>
-<div class="container">
+<div class="container-fluid bg-dark text-light" style="height: 100vh">
     <div th:replace="fragments::adminbar"></div>
     <div th:if="${answeredUsers.size() == 0}">
-        <p>
-            There're no users who completed that survey
-        </p>
+        <h2>There're no users who completed that survey</h2>
         <a href="/users_results">
-            Back to answered surveys page
+            Back to surveys list
         </a>
     </div>
-    <div th:each="user : ${answeredUsers}">
-        <p th:text="'User: ' + ${user.getUsername()}">
-            Username
-        </p>
-        <a th:href="@{/users_results/user/{id}(id=${user.getId()}, survey=${surveyId})}">
-            View answers
-        </a>
+    <div class="card border-light bg-light text-dark m-1 p-2" th:each="user : ${answeredUsers}">
+        <div class="card-body">
+            <h4 class="card-title" th:text="'User: ' + ${user.getUsername()}">
+                Username
+            </h4>
+            <a class="card-link btn btn-outline-dark"
+               th:href="@{/users_results/user/{id}(id=${user.getId()}, survey=${surveyId})}">
+                View answers
+            </a>
+        </div>
     </div>
 </div>
 </body>

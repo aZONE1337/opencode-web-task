@@ -45,15 +45,4 @@ public class QuestionServiceImpl implements QuestionService {
 
         return questionRepository.save(question);
     }
-
-    @Override
-    public List<Question> getNotAnsweredQuestions(Survey survey,  User user) {
-        List<Question> answeredQuestions = user.getAnswers().stream()
-                .map(Answer::getQuestion)
-                .collect(Collectors.toList());
-
-        return survey.getQuestions().stream()
-                .filter(question -> !answeredQuestions.contains(question))
-                .collect(Collectors.toList());
-    }
 }

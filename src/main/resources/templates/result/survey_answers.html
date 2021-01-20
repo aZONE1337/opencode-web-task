@@ -2,18 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments::all_header"></head>
 <body>
-<div class="container">
+<div class="container-fluid bg-dark text-light" style="height: 100vh">
     <div th:replace="fragments::adminbar"></div>
-    <div th:each="question, qstnStat : ${survey.getQuestions()}">
-        <p th:text="'Question #: ' + ${qstnStat.count}"></p>
-        <p th:text="${question.getText()}"></p>
-        <div th:each="answer : ${question.getAnswers()}">
-            <label>
-                <input th:type="${question.singleChoice} ? 'radio' : 'checkbox'"
-                       th:text="${answer.getText()}"
-                       th:checked="${answer.getUsers().contains(user)}"
-                       th:disabled="${!answer.getUsers().contains(user)}">
-            </label>
+    <div class="card border-light bg-light text-dark m-1 p-2" th:each="question, qstnStat : ${survey.getQuestions()}">
+        <div class="card-body">
+            <h4 class="card-title" th:text="'Question #: ' + ${qstnStat.count}"></h4>
+            <p class="card-text" th:text="${question.getText()}"></p>
+            <div th:each="answer : ${question.getAnswers()}">
+                <label>
+                    <input th:type="${question.singleChoice} ? 'radio' : 'checkbox'"
+                           th:text="${answer.getText()}"
+                           th:checked="${answer.getUsers().contains(user)}"
+                           th:disabled="${!answer.getUsers().contains(user)}">
+                </label>
+            </div>
         </div>
     </div>
 </div>

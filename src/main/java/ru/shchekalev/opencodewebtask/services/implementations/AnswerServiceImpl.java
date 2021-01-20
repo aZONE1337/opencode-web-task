@@ -21,11 +21,6 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public List<Answer> findAll() {
-        return answerRepository.findAll();
-    }
-
-    @Override
     public List<Answer> findAllByQuestionId(Long id) {
         return answerRepository.findAllByQuestionId(id);
     }
@@ -47,16 +42,5 @@ public class AnswerServiceImpl implements AnswerService {
         answer.setText(newAnswer.getText());
 
         return answerRepository.save(answer);
-    }
-
-    @Override
-    public List<Answer> findAllByUsers(User user) {
-        return answerRepository.findAllByUsers(user);
-    }
-
-    @Override
-    public List<Survey> findAllStartedSurveys(List<Answer> userAnswers) {
-        //TODO
-        return null;
     }
 }

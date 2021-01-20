@@ -2,37 +2,38 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments::all_header"></head>
 <body>
-<div class="container">
+<div class="container-fluid bg-dark text-light" style="height: 100vh">
     <div th:replace="fragments::adminbar"></div>
-    <h2>Survey's questions</h2>
+    <!--    <h2>Survey's questions</h2>-->
     <div th:if="${questions.size() == 0}">
-        <p>
+        <h2>
             There're no questions yet.
-        </p>
+        </h2>
     </div>
-    <div th:each="question, qstnStat : ${questions}">
-        <p th:text="'Question #: ' + ${qstnStat.count}"></p>
-        <p th:text="${question.getText()}"></p>
-        <a th:href="@{/constructor/questions/{id}/edit(id=${question.getId()})}">
-            Edit
-        </a>
-        <p>
-            <a th:href="@{/constructor/answers(question_id=${question.getId()})}">
+    <div class="card border-light bg-light text-dark m-1 p-2" th:each="question, qstnStat : ${questions}">
+        <div class="card-body">
+            <h4 class="card-header" th:text="'Question #: ' + ${qstnStat.count}"></h4>
+            <p class="card-text" th:text="${question.getText()}"></p>
+            <a class="card-link btn btn-outline-dark"
+               th:if="not ${question.getSurvey().available}"
+               th:href="@{/constructor/questions/{id}/edit(id=${question.getId()})}">
+                Edit
+            </a>
+            <a class="card-link btn btn-outline-dark"
+               th:href="@{/constructor/answers(question_id=${question.getId()})}">
                 View answers
             </a>
-        </p>
+        </div>
     </div>
-    <div>
-        <p>
-            <a th:href="@{/constructor/questions/new(survey_id=${survey.getId()})}">
-                Add new
-            </a>
-        </p>
-        <p>
-            <a href="/constructor/surveys/">
-                Back
-            </a>
-        </p>
+    <div class="m-1">
+        <a class="btn btn-outline-dark bg-light text-dark" href="/constructor/surveys/">
+            Back
+        </a>
+        <a class="btn btn-outline-dark bg-light text-dark"
+           th:if="not ${survey.available}"
+           th:href="@{/constructor/questions/new(survey_id=${survey.getId()})}">
+            Add new
+        </a>
     </div>
 </div>
 </body>

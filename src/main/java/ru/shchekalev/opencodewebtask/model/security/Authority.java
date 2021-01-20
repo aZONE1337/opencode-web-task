@@ -1,6 +1,7 @@
 package ru.shchekalev.opencodewebtask.model.security;
 
 public enum Authority {
+
     CREATE("create"),
     READ("read"),
     UPDATE("update"),
