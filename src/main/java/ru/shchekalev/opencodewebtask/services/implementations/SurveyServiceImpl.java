@@ -63,9 +63,4 @@ public class SurveyServiceImpl implements SurveyService {
 
         return available;
     }
-
-    @Override
-    public void deleteSurveyById(Long id) {
-        surveyRepository.deleteById(id);
-    }
 }

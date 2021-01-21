@@ -13,7 +13,7 @@
             <h4 class="card-title" th:text="'Option #: ' + ${answrStat.count}"></h4>
             <p class="card-text" th:text="${answer.getText()}"></p>
             <a class="card-link btn btn-outline-dark"
-               th:if="not ${question.getSurvey().available}"
+               th:if="not ${question.getSurvey().available} and ${question.getSurvey().getUsers().isEmpty()}"
                th:href="@{/constructor/answers/{id}/edit(id=${answer.getId()})}">
                 Edit
             </a>
@@ -21,12 +21,12 @@
     </div>
     <div class="m-1">
         <a class="btn btn-outline-dark bg-light text-dark"
-           th:href="@{/constructor/questions(survey_id=${question.getSurvey().getId()})}">
+           th:href="@{/constructor/questions(survey=${question.getSurvey().getId()})}">
             Back
         </a>
         <a class="btn btn-outline-dark bg-light text-dark"
-           th:if="not ${question.getSurvey().available}"
-           th:href="@{/constructor/answers/new(question_id=${question.getId()})}">
+           th:if="not ${question.getSurvey().available} and ${question.getSurvey().getUsers().isEmpty()}"
+           th:href="@{/constructor/answers/new(question=${question.getId()})}">
             Add option
         </a>
     </div>

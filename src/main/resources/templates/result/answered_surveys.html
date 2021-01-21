@@ -10,9 +10,9 @@
     </div>
     <div class="card border-light bg-light text-dark m-1 p-2" th:each="survey : ${surveys}">
         <div class="card-body">
-            <h4 class="card-title">Survey:</h4>
-            <a class="card-text" th:text="${survey.getName()}" th:href="@{/users_results/{id}(id=${survey.getId()})}">
-                List of answered users
+            <h4 class="card-title" th:text="'Survey: ' + ${survey.getName()}"></h4>
+            <a class="card-link btn btn-outline-dark" th:href="@{/users_results/{id}(id=${survey.getId()})}">
+                View answered users
             </a>
         </div>
     </div>

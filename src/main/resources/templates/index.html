@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::all_header"></head>
+<body>
+<div class="container-fluid bg-dark text-light" style="height: 100vh">
+    <div>
+        <th:block th:if="${admin}">
+            <div th:replace="fragments::adminbar"></div>
+        </th:block>
+        <th:block th:if="not ${admin}">
+            <div th:replace="fragments::userbar"></div>
+        </th:block>
+    </div>
+    <h2>Here's a main page!</h2>
+    <h2 th:text="'Hello ' + ${#authentication.getName()} + '!'"></h2>
+</div>
+</body>
+</html>

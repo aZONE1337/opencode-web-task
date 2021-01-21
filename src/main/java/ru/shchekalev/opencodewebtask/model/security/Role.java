@@ -4,8 +4,8 @@ import java.util.Set;
 
 public enum Role {
 
-    USER(Set.of(Authority.READ)),
-    ADMIN(Set.of(Authority.CREATE, Authority.READ, Authority.UPDATE, Authority.DELETE));
+    USER(Set.of(Authority.RESTRICTED)),
+    ADMIN(Set.of(Authority.FULL));
 
     private final Set<Authority> authorities;
 

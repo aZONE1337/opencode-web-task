@@ -1,11 +1,15 @@
 package ru.shchekalev.opencodewebtask.model.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "answer")
 public class Answer {
@@ -22,5 +26,21 @@ public class Answer {
     private Question question;
 
     @ManyToMany(mappedBy = "answers", cascade = CascadeType.ALL)
-    private List<User> users;
+    private Set<User> users = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Answer)) return false;
+        Answer answer = (Answer) o;
+        return Objects.equals(getId(), answer.getId()) &&
+                Objects.equals(getText(), answer.getText()) &&
+                Objects.equals(getQuestion(), answer.getQuestion()) &&
+                Objects.equals(getUsers(), answer.getUsers());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getText(), getQuestion());
+    }
 }

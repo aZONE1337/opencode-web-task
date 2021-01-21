@@ -15,12 +15,12 @@
             <h4 class="card-header" th:text="'Question #: ' + ${qstnStat.count}"></h4>
             <p class="card-text" th:text="${question.getText()}"></p>
             <a class="card-link btn btn-outline-dark"
-               th:if="not ${question.getSurvey().available}"
+               th:if="not ${survey.available} and ${survey.getUsers().isEmpty()}"
                th:href="@{/constructor/questions/{id}/edit(id=${question.getId()})}">
                 Edit
             </a>
             <a class="card-link btn btn-outline-dark"
-               th:href="@{/constructor/answers(question_id=${question.getId()})}">
+               th:href="@{/constructor/answers(question=${question.getId()})}">
                 View answers
             </a>
         </div>
@@ -30,8 +30,8 @@
             Back
         </a>
         <a class="btn btn-outline-dark bg-light text-dark"
-           th:if="not ${survey.available}"
-           th:href="@{/constructor/questions/new(survey_id=${survey.getId()})}">
+           th:if="not ${survey.available} and ${survey.getUsers().isEmpty()}"
+           th:href="@{/constructor/questions/new(survey=${survey.getId()})}">
             Add new
         </a>
     </div>

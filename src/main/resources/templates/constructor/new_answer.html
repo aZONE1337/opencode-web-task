@@ -6,7 +6,7 @@
     <div th:replace="fragments::adminbar"></div>
     <div class="card border-light bg-light text-dark m-1 p-2">
         <div class="card-body">
-            <form th:method="post" th:action="@{/constructor/answers(question_id=${question.getId()})}"
+            <form th:method="post" th:action="@{/constructor/answers(question=${question.getId()})}"
                   th:object="${answer}">
                 <p>
                     <label for="text">Enter answer here:</label>

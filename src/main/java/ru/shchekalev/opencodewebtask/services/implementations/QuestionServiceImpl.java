@@ -2,15 +2,11 @@ package ru.shchekalev.opencodewebtask.services.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.shchekalev.opencodewebtask.model.entity.Answer;
 import ru.shchekalev.opencodewebtask.model.entity.Question;
-import ru.shchekalev.opencodewebtask.model.entity.Survey;
-import ru.shchekalev.opencodewebtask.model.entity.User;
 import ru.shchekalev.opencodewebtask.repository.QuestionRepository;
 import ru.shchekalev.opencodewebtask.services.interfaces.QuestionService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -41,7 +37,9 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question update(Long id, Question newQuestion) {
         Question question = questionRepository.getOne(id);
+
         question.setText(newQuestion.getText());
+        question.setSingleChoice(newQuestion.isSingleChoice());
 
         return questionRepository.save(question);
     }

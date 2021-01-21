@@ -10,7 +10,7 @@ import ru.shchekalev.opencodewebtask.services.interfaces.QuestionService;
 import ru.shchekalev.opencodewebtask.services.interfaces.SurveyService;
 
 @Controller
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasAuthority('full')")
 @RequestMapping("/constructor/questions")
 public class QuestionsConstructorController {
 
@@ -25,7 +25,7 @@ public class QuestionsConstructorController {
     }
 
     @GetMapping
-    public String getSurveysQuestions(@RequestParam("survey_id") Long surveyId,
+    public String getSurveysQuestions(@RequestParam("survey") Long surveyId,
                                         Model model) {
         model.addAttribute("survey", surveyService.findById(surveyId));
         model.addAttribute("questions", questionService.findAllBySurveyId(surveyId));
@@ -34,16 +34,16 @@ public class QuestionsConstructorController {
     }
 
     @PostMapping
-    public String createNewQuestion(@RequestParam("survey_id") Long surveyId,
+    public String createNewQuestion(@RequestParam("survey") Long surveyId,
                                     @ModelAttribute Question question) {
         question.setSurvey(surveyService.findById(surveyId));
         questionService.save(question);
 
-        return "redirect:/constructor/questions?survey_id=" + surveyId;
+        return "redirect:/constructor/questions?survey=" + surveyId;
     }
 
     @GetMapping("/new")
-    public String showNewQuestionPage(@RequestParam("survey_id") Long surveyId,
+    public String showNewQuestionPage(@RequestParam("survey") Long surveyId,
                                       Model model) {
         model.addAttribute("survey", surveyService.findById(surveyId));
         model.addAttribute("question", new Question());
@@ -64,6 +64,6 @@ public class QuestionsConstructorController {
                                @ModelAttribute Question newQuestion) {
         Question question = questionService.update(id, newQuestion);
 
-        return "redirect:/constructor/questions?survey_id=" + question.getSurvey().getId();
+        return "redirect:/constructor/questions?survey=" + question.getSurvey().getId();
     }
 }

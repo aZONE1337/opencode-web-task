@@ -16,13 +16,13 @@
         <p class="card-text" th:text="${question.getText()}"></p>
         <form th:method="post" th:action="@{/surveys/{id}(id=${survey.getId()}, question=${questionNum})}"
               th:object="${user}">
-            <p th:each="answer : ${question.getAnswers()}">
+            <p th:each="answer, answrStat : ${question.getAnswers()}">
                 <label>
                     <input th:type="${question.singleChoice} ? 'radio' : 'checkbox'"
                            th:field="*{answers}"
                            th:value="${answer.getId()}"
                            th:text="${answer.getText()}"
-                           required>
+                           th:required="${answrStat.count == 1}">
                 </label>
             </p>
             <a class="card-link btn btn-outline-dark" th:if="${questionNum > 0}"

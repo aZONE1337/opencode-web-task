@@ -16,6 +16,7 @@ import ru.shchekalev.opencodewebtask.services.interfaces.SurveyService;
 import ru.shchekalev.opencodewebtask.services.interfaces.UserService;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/")
@@ -32,11 +33,6 @@ public class SurveysCommonController {
         this.surveyService = surveyService;
         this.userService = userService;
         this.questionService = questionService;
-    }
-
-    @GetMapping
-    public String redirectToSurveys() {
-        return "redirect:/surveys";
     }
 
     @GetMapping("/surveys")
@@ -84,8 +80,7 @@ public class SurveysCommonController {
         User user = userService.findByUsername(currUser.getUsername());
         Survey survey = surveyService.findById(surveyId);
 
-        user.getCompletedSurveys().remove(survey);
-        userService.save(user);
+        userService.removeCompletedSurvey(user.getId(), survey);
 
         return "redirect:/completed";
     }
@@ -113,25 +108,18 @@ public class SurveysCommonController {
                                  @RequestParam("question") int questionNum,
                                  @AuthenticationPrincipal UserDetails currUser,
                                  @ModelAttribute User user) {
-         User userToUpd = userService.findByUsername(currUser.getUsername());
-         List<Answer> currAnswers = userToUpd.getAnswers();
+        Survey survey = surveyService.findById(surveyId);
+        Long userId = userService.findByUsername(currUser.getUsername()).getId();
+        Set<Answer> newAnswers = user.getAnswers();
 
-         Survey survey = surveyService.findById(surveyId);
-         List<Answer> answerOptions = survey.getQuestions().get(questionNum).getAnswers();
+        userService.updateAnswers(userId, newAnswers);
 
-         currAnswers.removeAll(answerOptions);
-         currAnswers.addAll(user.getAnswers());
+        if (survey.getQuestions().size() == ++questionNum) {
+            userService.addCompletedSurvey(userId, survey);
 
-         String redirectStr;
+            return "redirect:/surveys";
+        }
 
-         if (survey.getQuestions().size() == ++questionNum) {
-             userToUpd.getCompletedSurveys().add(survey);
-             redirectStr = "surveys";
-         } else
-             redirectStr = "surveys/" + surveyId + "?question=" + questionNum;
-
-         userService.save(userToUpd);
-
-         return "redirect:/" + redirectStr;
+        return "redirect:/surveys/" + surveyId + "?question=" + questionNum;
     }
 }

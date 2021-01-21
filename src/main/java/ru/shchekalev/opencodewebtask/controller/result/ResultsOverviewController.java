@@ -13,7 +13,7 @@ import ru.shchekalev.opencodewebtask.services.interfaces.SurveyService;
 import ru.shchekalev.opencodewebtask.services.interfaces.UserService;
 
 @Controller
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasAuthority('full')")
 @RequestMapping("/users_results")
 public class ResultsOverviewController {
 
@@ -39,7 +39,7 @@ public class ResultsOverviewController {
                                    Model model) {
         Survey survey = surveyService.findById(surveyId);
 
-        model.addAttribute("answeredUsers", userService.findAllByCompletedSurveys(survey));
+        model.addAttribute("answeredUsers", userService.findAllByCompletedSurvey(survey));
         model.addAttribute("surveyId", surveyId);
 
         return "result/answered_users";

@@ -10,7 +10,7 @@ import ru.shchekalev.opencodewebtask.services.interfaces.AnswerService;
 import ru.shchekalev.opencodewebtask.services.interfaces.QuestionService;
 
 @Controller
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasAuthority('full')")
 @RequestMapping("/constructor/answers")
 public class AnswersConstructorController {
 
@@ -25,7 +25,7 @@ public class AnswersConstructorController {
     }
 
     @GetMapping
-    public String getQuestionsAnswers(@RequestParam("question_id") Long questionId,
+    public String getQuestionsAnswers(@RequestParam("question") Long questionId,
                                       Model model) {
         model.addAttribute("question", questionService.findById(questionId));
         model.addAttribute("answers", answerService.findAllByQuestionId(questionId));
@@ -34,16 +34,16 @@ public class AnswersConstructorController {
     }
 
     @PostMapping
-    public String createNewAnswer(@RequestParam("question_id") Long questionId,
+    public String createNewAnswer(@RequestParam("question") Long questionId,
                                   @ModelAttribute Answer answer) {
         answer.setQuestion(questionService.findById(questionId));
         answerService.save(answer);
 
-        return "redirect:/constructor/answers?question_id=" + questionId;
+        return "redirect:/constructor/answers?question=" + questionId;
     }
 
     @GetMapping("/new")
-    public String showNewAnswerPage(@RequestParam("question_id") Long questionId,
+    public String showNewAnswerPage(@RequestParam("question") Long questionId,
                                     Model model) {
         model.addAttribute("question", questionService.findById(questionId));
         model.addAttribute("answer", new Answer());
@@ -64,6 +64,6 @@ public class AnswersConstructorController {
                              @ModelAttribute Answer newAnswer) {
         Answer answer = answerService.update(id, newAnswer);
 
-        return "redirect:/constructor/answers?question_id=" + answer.getQuestion().getId();
+        return "redirect:/constructor/answers?question=" + answer.getQuestion().getId();
     }
 }

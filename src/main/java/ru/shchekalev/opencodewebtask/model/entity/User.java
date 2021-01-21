@@ -1,12 +1,17 @@
 package ru.shchekalev.opencodewebtask.model.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import ru.shchekalev.opencodewebtask.model.security.Role;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "user")
 public class User {
@@ -28,19 +33,38 @@ public class User {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Survey> createdSurveys;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_answer",
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "answer_id") }
     )
-    List<Answer> answers;
+    private Set<Answer> answers = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_survey",
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "survey_id") }
     )
-    List<Survey> completedSurveys;
+    private Set<Survey> completedSurveys = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId()) &&
+                Objects.equals(getUsername(), user.getUsername()) &&
+                Objects.equals(getPassword(), user.getPassword()) &&
+                getRole() == user.getRole() &&
+                Objects.equals(getCreatedSurveys(), user.getCreatedSurveys()) &&
+                Objects.equals(getAnswers(), user.getAnswers()) &&
+                Objects.equals(getCompletedSurveys(), user.getCompletedSurveys());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUsername(), getPassword(), getRole());
+    }
 }

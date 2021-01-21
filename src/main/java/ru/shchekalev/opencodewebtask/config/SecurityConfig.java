@@ -9,9 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import ru.shchekalev.opencodewebtask.model.security.Authority;
-import ru.shchekalev.opencodewebtask.model.security.Role;
 import ru.shchekalev.opencodewebtask.services.CustomUserDetailsService;
 
 @EnableWebSecurity
@@ -27,19 +24,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
-                .antMatchers("/registration").permitAll()
-                .anyRequest().authenticated()
+        http.csrf().disable()
+                    .authorizeRequests()
+                    .antMatchers("/registration").permitAll()
+                    .anyRequest().authenticated()
                 .and()
-                .formLogin()
-//                .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/surveys")
+                    .formLogin()
+                    .loginPage("/login").permitAll()
+                    .defaultSuccessUrl("/")
+                    .failureUrl("/login-error")
                 .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutSuccessUrl("/login");
+                    .logout()
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .logoutSuccessUrl("/login");
 
     }
 
@@ -56,14 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         authenticationProvider.setUserDetailsService(userService);
-        return authenticationProvider;
-    }
 
-    private String[] getAuthoritiesFromRole(Role role) {
-        return role.getAuthorities().stream()
-                .map(Authority::getAuthority)
-                .toArray(String[]::new);
+        return authenticationProvider;
     }
 }

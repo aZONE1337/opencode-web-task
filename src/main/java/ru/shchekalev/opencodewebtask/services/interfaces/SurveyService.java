@@ -20,6 +20,4 @@ public interface SurveyService {
     List<Survey> findAllCompletedByUser(User user);
 
     List<Survey> findAllAvailableAndNotCompletedByUser(User user);
-
-    void deleteSurveyById(Long id);
 }

@@ -2,10 +2,8 @@ package ru.shchekalev.opencodewebtask.model.security;
 
 public enum Authority {
 
-    CREATE("create"),
-    READ("read"),
-    UPDATE("update"),
-    DELETE("delete");
+    FULL("full"),
+    RESTRICTED("restricted");
 
     private final String authority;
 
